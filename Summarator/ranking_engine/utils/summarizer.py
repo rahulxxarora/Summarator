@@ -44,16 +44,6 @@ def get_best_sentence(paragraph, sentences_dic):
 	best_sentence = ""
 	max_value     = 0
 
-	'''
-	if len(sentences) == 1:
-		s = sentences[0]
-		strip_s = format_sentence(s)
-		if sentences_dic[strip_s] > 50 and strip_s:
-        	return s
-     	else:
-        	return ("\n").join(sentences)
-    '''
-
 	for s in sentences:
 		strip_s = format_sentence(s)
 		if strip_s:
