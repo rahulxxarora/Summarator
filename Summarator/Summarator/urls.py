@@ -19,4 +19,5 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^scrape/', include('data_manager.urls')),
+    url(r'^process', include('ranking_engine.urls')),
 ]
