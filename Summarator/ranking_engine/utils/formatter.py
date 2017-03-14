@@ -9,7 +9,7 @@ STEMMER = PorterStemmer()
 
 
 #####################################################################
-# Methods for formatting text
+# Utility methods for formatting text
 #####################################################################
 def get_roots(sentence):
 	temp = [STEMMER.stem(i) for i in sentence]
@@ -33,3 +33,6 @@ def content_to_sentences(text):
 	for s in sent:
 		response.append(s)
 	return response
+
+def format_sentence(text):
+	return ''.join(e for e in text if e.isalnum())
