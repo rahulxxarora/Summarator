@@ -1,4 +1,5 @@
 import math
+import re
 
 from formatter import *
 
@@ -20,6 +21,7 @@ def sentences_intersection(a, b):
 def get_sentences_rank(text):
 	sentences_score_dic   = {}
 	sentences_mapping_dic = {}
+	important_regex       = re.compile('\d')
 	sentences       	  = content_to_sentences(text)
 	total_sentences 	  = len(sentences)
 	values          	  = [[0 for x in xrange(total_sentences)] for x in xrange(total_sentences)]
@@ -35,6 +37,9 @@ def get_sentences_rank(text):
 			if i == j:
 				continue
 			score += values[i][j]
+
+		if important_regex.search(sentences[i]):
+			score += (0.3)*(total_sentences)
 
 		sentences_mapping_dic[format_sentence(sentences[i])] = sentences[i]
 		sentences_score_dic[format_sentence(sentences[i])]   = score
