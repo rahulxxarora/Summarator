@@ -1,3 +1,5 @@
+import math
+
 from formatter import *
 
 #####################################################################
@@ -40,18 +42,27 @@ def get_sentences_rank(text):
 	return sentences_score_dic
 
 def get_best_sentence(paragraph, sentences_dic):
-	sentences     = content_to_sentences(paragraph)
-	best_sentence = ""
-	max_value     = 0
+	sentences              = content_to_sentences(paragraph)
+	total_sentences        = len(sentences)
+	selection_factor       = math.ceil((0.4)*(total_sentences))
+	best_sentences         = []
+	selected_sentences_ctr = 0
 
-	for s in sentences:
-		strip_s = format_sentence(s)
-		if strip_s:
-			if sentences_dic[strip_s] > max_value:
-				max_value     = sentences_dic[strip_s]
-				best_sentence = s
+	while selected_sentences_ctr < selection_factor:
+		best_sentence = ''
+		max_value     = 0
 
-	return best_sentence
+		for s in sentences:
+			strip_s = format_sentence(s)
+			if strip_s:
+				if sentences_dic[strip_s] > max_value and s not in best_sentences:
+					max_value     = sentences_dic[strip_s]
+					best_sentence = s
+
+		selected_sentences_ctr += 1
+		best_sentences.append(best_sentence)
+
+	return ''.join(s for s in best_sentences)
 
 def get_summary(temp_content):
 	sentences_score_dic = get_sentences_rank(temp_content)
@@ -62,8 +73,8 @@ def get_summary(temp_content):
 	for p in paragraphs:
 		sentence = get_best_sentence(p, sentences_score_dic).strip()
 		if sentence:
-			if sentence[-1] != ".":
-				sentence = sentence + "."
+			if sentence[-1] != '.':
+				sentence = sentence + '.'
 			summarized_content.append(sentence)
 
-	return ("\n").join(summarized_content)
+	return ('\n').join(summarized_content)
